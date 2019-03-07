@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.UserMapper">
+     <resultMap id="UserInfoResult" type="com.pojo.UserInfo"   >
+         <id property="userId" column="USER_ID"/>
+         <result property="username" column="USER_NAME"/>
+         <result property="password" column="USER_PASSWORD"/>
+         <result property="salt" column="SALT"/>
+         <result property="status" column="STATUS"/>
+         <result property="realname" column="REAL_NAME"/>
+         <result property="lasttime"  column="LAST_LOGIN_TIME" />
+         <collection property="roleInfoList" ofType="com.pojo.RoleInfo">
+             <id property="roleId" column="ROLE_ID"/>
+             <result property="rolename" column="ROLE_NAME"/>
+             <result property="role_description" column="ROLE_DESCRIPTION"/>
+             <collection property="permissionInfoList" ofType="com.pojo.PermissionInfo">
+                 <id property="permissionId" column="PERMISSION_ID"/>
+                 <result property="permissionname" column="PERMISSION_NAME"/>
+                 <result property="permission_description" column="PERMISSION_DESCRIPTION"/>
+             </collection>
+         </collection>
+     </resultMap>
+
+<!--    <select id="getUserByName" resultMap="UserInfoResult" parameterType="String">
+        select * from
+        user_info u,user_role ur,role_info r,role_permission rp, permission_info p
+        WHERE u.USER_NAME = #{username}
+        and u.USER_ID = ur.USERID
+        and r.ROLE_ID  = ur.ROLEID
+        and r.ROLE_ID  = rp.ROLEID
+        and p.PERMISSION_ID = rp.PERMISSIONID
+    </select>-->
+
+    <select id="getUserNameById" resultType="string" parameterType="Integer">
+        SELECT USER_NAME from user_info
+        WHERE USER_ID = #{userId}
+    </select>
+    <!--通过用户名查询，并获取其角色-->
+    <select id="getUserByName" resultMap="UserInfoResult" parameterType="String">
+        select * from
+          user_info as u LEFT JOIN user_role as ur
+          on u.USER_ID = ur.USERID
+          LEFT JOIN role_info as r
+          on ur.ROLEID = r.ROLE_ID WHERE u.USER_NAME = #{username}
+    </select>
+
+    <!--通过用户名模糊查询，并获取其角色-->
+    <select id="getUserFuzzy" resultMap="UserInfoResult" parameterType="com.pojo.UserInfo">
+        SELECT * FROM
+        user_info as u LEFT JOIN user_role as ur
+        on u.USER_ID = ur.USERID
+        LEFT JOIN role_info as r
+        on ur.ROLEID = r.ROLE_ID
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="username != null and username != ''">AND u.USER_NAME LIKE "%"#{username}"%"</if>
+            <if test="realname != null and realname != ''">AND u.REAL_NAME = #{realname}</if>
+            <if test="status != null and status != ''">AND u.STATUS = #{status}</if>
+        </trim>
+
+    </select>
+
+
+    <!--添加用户(基本用户信息)-->
+    <insert id="addUser" parameterType="com.pojo.UserInfo">
+        INSERT INTO user_info
+        (USER_NAME,REAL_NAME,USER_PASSWORD,SALT,STATUS)
+        VALUES
+         (#{username},
+          #{realname},
+          #{password},
+          123,
+          1)
+    </insert>
+
+    <!--级联删除-->
+    <delete id="deleteUser" parameterType="Integer">
+        DELETE FROM user_info
+        WHERE USER_ID = #{userId}
+    </delete>
+
+    <!--用户修改-->
+    <update id="updateUser" parameterType="com.pojo.UserInfo">
+        UPDATE user_info
+        <set>
+            <if test="username != null and username !=''">USER_NAME = #{username},</if>
+            <if test="password !=null and password !=''"> USER_PASSWORD = #{password},</if>
+            <if test="realname !=null and realname != '' ">REAL_NAME = #{realname},</if>
+            <if test="status !=null and status !='' "> STATUS = #{status}</if>
+        </set>
+       where USER_ID = #{userId}
+    </update>
+
+    <!--用户移除角色-->
+    <delete id="deleteUserRole" parameterType="com.pojo.UserInfo">
+        DELETE FROM user_role
+        WHERE USERID = #{userId}
+        AND ROLEID IN
+        <foreach item="role" collection="roleInfoList" open="(" separator="," close=")">
+            #{role.roleId}
+        </foreach>
+    </delete>
+
+    <!--用户赋予角色-->
+    <insert id="addUserRole" parameterType="com.pojo.UserInfo">
+      INSERT INTO user_role (USERID,ROLEID)
+      select #{userId} as USERID, ROLE_ID AS ROLEID
+      FROM role_info WHERE ROLE_ID IN
+      <foreach item="role" collection="roleInfoList" open="(" separator="," close=")">
+        #{role.roleId}
+      </foreach>
+    </insert>
+
+    <update id="userLoginTime" parameterType="com.pojo.UserInfo">
+        UPDATE user_info
+        set LAST_LOGIN_TIME = #{lasttime}
+        WHERE USER_NAME = #{username}
+    </update>
+
+
+</mapper>

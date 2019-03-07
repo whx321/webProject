@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ArticleMapper">
+    <resultMap id="articleMap" type="com.pojo.Article">
+        <id property="articleId" column="ARTICLE_ID"/>
+        <result property="articleTitle" column="ARTICLE_TITLE"/>
+        <result property="articleDescription" column="ARTICLE_DESCRIPTION"/>
+        <result property="articleKeyword" column="ARTICLE_KEYWORD"/>
+        <result property="articleCoverPhoto" column="ARTICLE_COVER_PHOTO"/>
+        <result property="articleSource" column="ARTICLE_SOURCE"/>
+        <result property="articleReleaseDate" column="ARTICLE_RELEASE_DATE" javaType="DATE" jdbcType = "TIMESTAMP"/>
+        <result property="articlePublisher" column="ARTICLE_PUBLISHER"/>
+        <result property="articleAbstract" column="ARTICLE_ABSTRACT"/>
+        <result property="articleContent" column="ARTICLE_CONTENT"/>
+        <result property="articleEnclosure" column="ARTICLE_ENCLOSURE"/>
+        <result property="articleReserve1" column="ARTICLE_RESERVE1"/>
+        <result property="articleReserve2" column="ARTICLE_RESERVE2"/>
+        <result property="articleReserve3" column="ARTICLE_RESERVE3"/>
+        <result property="articleSortNumber" column="ARTICLE_SORT_NUMBER"/>
+        <result property="articleType" column="ARTICLE_TYPE"/>
+    </resultMap>
+    <insert id="addArticle" parameterType="com.pojo.Article" useGeneratedKeys="true" keyProperty="articleId">
+        insert into ywtd_article(ARTICLE_TITLE,ARTICLE_DESCRIPTION,ARTICLE_KEYWORD,ARTICLE_COVER_PHOTO,
+        ARTICLE_SOURCE,ARTICLE_RELEASE_DATE,ARTICLE_PUBLISHER,ARTICLE_ABSTRACT,
+        ARTICLE_CONTENT,ARTICLE_ENCLOSURE,ARTICLE_RESERVE1,ARTICLE_RESERVE2,ARTICLE_RESERVE3,ARTICLE_SORT_NUMBER,ARTICLE_TYPE)
+         values
+		 (#{articleTitle},#{articleDescription},#{articleKeyword},#{articleCoverPhoto},
+		 #{articleSource},#{articleReleaseDate},#{articlePublisher},#{articleAbstract},#{articleContent},
+		 #{articleEnclosure},#{articleReserve1},#{articleReserve2},#{articleReserve3},#{articleSortNumber},#{articleType})
+    </insert>
+    <delete id="deleteArticleById" parameterType="java.lang.Integer">
+        delete from ywtd_article where ARTICLE_ID=#{articleId}
+    </delete>
+    <update id="updateArticle" parameterType="com.pojo.Article">
+        update ywtd_article
+        <set>
+            <if test="articleTitle!=null">
+                ARTICLE_TITLE=#{articleTitle},
+            </if>
+            <if test="articleDescription!=null">
+                ARTICLE_DESCRIPTION=#{articleDescription},
+            </if>
+            <if test="articleKeyword!=null">
+                ARTICLE_KEYWORD=#{articleKeyword},
+            </if>
+            <if test="articleCoverPhoto!=null">
+                ARTICLE_COVER_PHOTO=#{articleCoverPhoto},
+            </if>
+            <if test="articleSource!=null">
+                ARTICLE_SOURCE=#{articleSource},
+            </if>
+            <if test="articleReleaseDate!=null">
+                ARTICLE_RELEASE_DATE=#{articleReleaseDate},
+            </if>
+            <if test="articlePublisher!=null">
+                ARTICLE_PUBLISHER=#{articlePublisher},
+            </if>
+            <if test="articleAbstract!=null">
+                ARTICLE_ABSTRACT=#{articleAbstract},
+            </if>
+            <if test="articleContent!=null">
+                ARTICLE_CONTENT=#{articleContent},
+            </if>
+            <if test="articleEnclosure!=null">
+                ARTICLE_ENCLOSURE=#{articleEnclosure},
+            </if>
+            <if test="articleReserve1!=null">
+                ARTICLE_RESERVE1=#{articleReserve1},
+            </if>
+            <if test="articleReserve2!=null">
+                ARTICLE_RESERVE2=#{articleReserve2},
+            </if>
+            <if test="articleReserve3!=null">
+                ARTICLE_RESERVE3=#{articleReserve3},
+            </if>
+            <if test="articleSortNumber!=null">
+                ARTICLE_SORT_NUMBER=#{articleSortNumber},
+            </if>
+            <if test="articleType!=null">
+                ARTICLE_TYPE=#{articleType},
+            </if>
+        </set>
+        where ARTICLE_ID=#{articleId}
+    </update>
+    <select id="selectArticleByArticleId" parameterType="Integer" resultMap="articleMap">
+        select * from ywtd_article
+      where ARTICLE_ID=#{articleId}
+    </select>
+    <select id="selectArticlesByStrs" parameterType="com.pojo.Article" resultMap="articleMap">
+        select * from ywtd_article
+        <where> ARTICLE_TYPE=#{articleType}
+            <if test="articleTitle !=null and articleTitle !=''">
+                AND ARTICLE_TITLE = #{articleTitle}
+            </if>
+            <if test="articleSource !=null and articleSource !=''">
+                AND ARTICLE_SOURCE = #{articleSource}
+            </if>
+            <if test="date1 !=null">
+                AND <![CDATA[ ARTICLE_RELEASE_DATE>=#{date1,jdbcType = TIMESTAMP} ]]>
+            </if>
+            <if test="date2 !=null">
+                AND <![CDATA[ ARTICLE_RELEASE_DATE<=#{date2,jdbcType = TIMESTAMP} ]]>
+            </if>
+            <if test="articlePublisher !=null and articlePublisher !=''">
+                AND ARTICLE_PUBLISHER = #{articlePublisher}
+            </if>
+            <if test="articleContent !=null and articleContent !=''">
+                AND ARTICLE_CONTENT like '%${articleContent}%'
+            </if>
+        </where>
+        order by ARTICLE_SORT_NUMBER asc
+    </select>
+    <select id="selectArticlesByType" parameterType="String" resultMap="articleMap">
+        select * from ywtd_article
+      where ARTICLE_TYPE=#{articleType}
+        order by ARTICLE_SORT_NUMBER asc
+    </select>
+    <select id="selectArticleIdByTheLast" resultType="Integer">
+        select MAX(a.ARTICLE_ID) from ywtd_article a
+    </select>
+
+    <select id="selectArticleByArticleTitle" resultType="Integer">
+        select count(*) from ywtd_article where ARTICLE_TITLE=#{articleTitle}
+    </select>
+</mapper>
+
+    

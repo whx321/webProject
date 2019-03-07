@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>后台管理系统</title>
+		<link rel="stylesheet" href="../css/bootstrap.css" />
+		<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap.js"></script>
+		<link rel="stylesheet" href="../css/new_file.css" />
+	</head>
+
+	<body>
+		<div class="row header">
+			<div class="container-fluid ">
+				<nav class="navbar ">
+					<div class="container-default">
+						<div class="navbar-header">
+							<a href="#" class="navbar-brand">
+								<i class="glyphicon glyphicon-home"></i>后台管理系统
+							</a>
+						</div>
+					</div>
+					<div class="button">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="#"><i class="glyphicon glyphicon-refresh"></i>刷新页面</a>
+							</li>
+							<li>
+								<a href="#"><i class="glyphicon glyphicon-refresh"></i>刷新列表项</a>
+							</li>
+							<li>
+								<a href="#"><i class="glyphicon glyphicon-refresh"></i>刷新文章项</a>
+							</li>
+							<li>
+								<a href="#"><i class="glyphicon glyphicon-open"></i>打开首页</a>
+							</li>
+							<li>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="glyphicon glyphicon-user"></i> 测试人员
+									<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">修改密码</a>
+									</li>
+									<li>
+										<a href="/user/loginOut">退出系统</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-2 menu">
+				<div class="panel-group" id="accordion">
+					<!--第一个-->
+					<div class="panel">
+						<div class="panel-heading">
+							<a data-toggle="collapse" href="#example" data-parent="#accordion">
+								<i class="glyphicon glyphicon-edit"></i> 文章管理
+							</a>
+						</div>
+						<div id="example" class="panel-collapse collapse panel-group">
+							<div class="panel-body">
+								<div class="panel-group" id="part">
+									<div class="panel">
+										<div class="panel-heading">
+											<a data-toggle="collapse" data-parent="#part" href="#one"><i class="glyphicon glyphicon-th-large"></i>关于我们</a>
+										</div>
+										<div id="one" class="panel-collapse collapse">
+											<ul>
+												<li>公司简介</li>
+												<li>企业文化</li>
+												<li>公司团队</li>
+												<li>企业理念</li>
+											</ul>
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-heading">
+											<a data-toggle="collapse" data-parent="#part" href="#two"><i class="glyphicon glyphicon-th-large"></i>主营业务</a>								
+										</div>
+										<div id="two" class="panel-collapse collapse">
+											<div class="panel-body">
+												<div class="panel-group" id="samllP">
+													<div class="panel">
+														<div class="panel-heading">
+															<a data-toggle="collapse" data-parent="#samllP" href="#S_one"><i class="glyphicon glyphicon-th-large"></i>农业物联网</a>
+														</div>
+														<div id="S_one"  class="panel-collapse collapse">
+															<ul>
+																<li><a>解决方案</a></li>
+																<li><a>产品介绍</a></li>
+																<li><a>经典案例</a></li>
+															</ul>
+														</div>
+													</div>													
+													<div class="panel">
+														<div class="panel-heading">
+															<a data-toggle="collapse" data-parent="#samllP" href="">移动应用开发</a>
+														</div>
+														
+													</div>
+													<div class="panel">
+														<div class="panel-heading">
+															<a data-toggle="collapse" data-parent="#samllP" href="">亿网通云商城</a>
+														</div>
+														
+													</div>
+													<div class="panel">
+														<div class="panel-heading">
+															<a data-toggle="collapse" data-parent="#samllP" href="">应用软件开发</a>
+														</div>
+													
+													</div>
+													
+													<div class="panel">
+														<div class="panel-heading">
+															<a data-toggle="collapse" data-parent="#samllP" href="">电商整合营销服务</a>
+														</div>
+													
+													</div>
+												</div>
+											</div>																																																																												
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-heading">
+											<a data-toggle="collapse" data-parent="#part" href="#three"><i class="glyphicon glyphicon-th-large"></i>新闻活动</a>									
+										</div>
+										<div id="three" class="panel-collapse collapse">
+											<ul>
+												<li><a>新闻中心</a></li>
+												<li><a>市场活动</a></li>
+												
+											</ul>
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-heading">
+											<a data-toggle="collapse" data-parent="#part" href="#four"><i class="glyphicon glyphicon-th-large"></i>联系招聘</a>			
+										</div>
+										<div id="four" class="panel-collapse collapse">
+											<ul>
+												<li><a>联系我们</a></li>
+												<li><a>人才招聘</a></li>						
+											</ul>
+										</div>
+									</div>
+									<div class="panel">
+										<div class="panel-heading">
+											<a data-toggle="collapse" data-parent="#part">轮播图</a>								
+										</div>								
+									</div>
+								</div>																																																																																															
+							</div>
+						</div>
+					</div>
+					<!--第二个-->
+					<div class="panel">
+						<div class="panel-heading">
+							<a data-toggle="collapse" href="#exampleOne" data-parent="#accordion">
+								<i class="glyphicon glyphicon-globe"></i> 网站管理
+							</a>
+						</div>
+						<div id="exampleOne" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="nav nav-pills nav-stacked">
+									<li>
+										<a href="b/项目管理.html" target="iframe">栏目管理</a>
+									</li>
+									<li>
+										<a href="#">模板管理</a>
+									</li>
+									<li>
+										<a href="b/公共变量.html" target="iframe">公共变量</a>
+									</li>
+									<li>
+										<a href="b/素材管理.html" target="iframe">素材管理</a>
+									</li>
+									<li>
+										<a href="#">友情链接</a>
+									</li>
+									<li>
+										<a href="#">页面文件管理</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--第三个-->
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<a data-toggle="collapse" href="#exampletwo" data-parent="#accordion">
+								<i class="glyphicon glyphicon-th"></i> 系统管理
+							</a>
+						</div>
+						<div id="exampletwo" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="nav nav-pills nav-stacked">
+									<li>
+										<a href="c/角色管理.html" target="iframe">角色管理</a>
+									</li>
+									<li>
+										<a href="#">用户管理</a>
+									</li>
+									<li>
+										<a href="#">参数配置</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-lg-10">
+				<!--<iframe src="mainpage.html" width="100%" height="450px" frameborder="0" name="iframe"></iframe>-->
+			</div>
+		</div>
+		<div class="row footer" style="background-color:#E0E0E0;height:40px;">
+			天津亿网通达网络技术有限公司
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>用户登录</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/index.css"/>
+	</head>
+	<body>
+		<div id="" class="container">
+			
+      		<div id="" class="box">
+      			<div class="tit">
+      					网站后台管理系统
+      				</div>
+              <form class="form-horizontal" action="/user/login" method="post">
+      				<div id="showinfo"></div>
+                  <div class="form-group">
+                    <label for="user" class="col-md-3 control-label">用户名</label>
+                    <div class="col-md-9">
+                      <input type="text" class="form-control" id="user" placeholder="请输入用户名" name="username">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password" class="col-md-3 control-label">密码</label>
+                    <div class="col-md-9">
+                      <input type="password" class="form-control" id="password" placeholder="请输入密码" name="password">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> 记住我
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+  
+                    <div class="col-md-offset-2">
+                      <button id="btnLogin" class="btn btn-primary">登录</button>
+                    </div>
+  
+              </form>
+      		</div>
+		</div>
+	</body>
+	
+	<!--<script src="../js/login.js"></script>-->
+</html>

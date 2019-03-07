@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UploadFileMapper">
+    <resultMap id="fileResult" type="com.pojo.UploadFile">
+        <id property="fileId" column="FILE_ID"></id>
+        <result property="articleId" column="ARTICLE_ID"/>
+        <result property="productId" column="PRODUCT_ID"/>
+        <result property="fileUrl" column="FILE_URL"/>
+        <result property="fileType" column="FILE_TYPE"/>
+    </resultMap>
+    <insert id="addUploadFile" parameterType="com.pojo.UploadFile" useGeneratedKeys="true">
+        insert into upload_file (ARTICLE_ID,PRODUCT_ID,FILE_URL,FILE_TYPE) values (#{articleId},#{productId},#{fileUrl},#{fileType})
+    </insert>
+    <delete id="deleteUploadFileByArticleId" parameterType="Integer">
+        delete from upload_file where ARTICLE_ID=#{articleId}
+    </delete>
+    <delete id="deleteUploadFileByProductId" parameterType="Integer">
+        delete from upload_file where PRODUCT_ID=#{productId}
+    </delete>
+    <delete id="deleteUploadFileById" parameterType="Integer">
+        delete from upload_file where FILE_ID=#{fileId}
+    </delete>
+    <update id="updateUploadFileByArticleId">
+        update upload_file set FILE_URL=#{fileUrl} where FILE_TYPE=#{fileType} and ARTICLE_ID=#{articleId}
+    </update>
+    <update id="updateUploadFileByProductId">
+        update upload_file set FILE_URL=#{fileUrl} where FILE_TYPE=#{fileType} and PRODUCT_ID=#{productId}
+    </update>
+    <update id="updateUploadFile">
+        update upload_file set ARTICLE_ID=#{articleId},PRODUCT_ID=#{productId},FILE_URL=#{fileUrl},FILE_TYPE=#{fileType}
+        where FILE_ID=#{fileId}
+    </update>
+    <select id="selectUploadFileByArticleId" parameterType="Integer" resultMap="fileResult">
+        select * from upload_file
+     where ARTICLE_ID=#{articleId}
+    </select>
+    <select id="selectUploadFileByProductId" parameterType="Integer" resultMap="fileResult">
+        select * from upload_file
+     where PRODUCT_ID=#{productId}
+    </select>
+    <select id="selectUploadFileByFileId" parameterType="Integer" resultMap="fileResult">
+        select * from upload_file
+     where FILE_ID=#{fileId}
+    </select>
+    <select id="selectUploadFileByTheLast" resultType="Integer">
+        select MAX(a.FILE_ID) from upload_file a
+    </select>
+    <select id="selectUploadFiles" resultMap="fileResult">
+        select * from upload_file order by FILE_TYPE
+    </select>
+</mapper>
+
+    

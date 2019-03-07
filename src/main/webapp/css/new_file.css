@@ -1,0 +1,35 @@
+
+/*头部样式*/
+.header{
+	background: linear-gradient(35deg,#48c6ef,#6f86d6);
+
+}
+.button ul li{
+	background-color: lightskyblue;
+	border-right:1px solid white ;
+	border-radius: 10%;
+}
+.button ul li a{
+	color: black;
+}
+.button{
+	margin-top: 10px;
+}
+.navbar-brand{
+	font-size: 40px;
+	color: white;
+}
+/*左侧导航栏样式*/
+.menu {
+	height: 500px;
+	background: linear-gradient(35deg,#48c6ef,#6f86d6);
+	margin-top: 0;
+}
+.menu ul li a{
+	color: #000000;
+}
+/*底部*/
+.footer{
+	text-align: center;
+	color: #000000;
+}

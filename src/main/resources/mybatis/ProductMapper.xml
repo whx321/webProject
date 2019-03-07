@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.ProductMapper">
+
+    <resultMap id="productResult" type="com.pojo.ProductInfo">
+        <id property="productId" column="PRODUCT_ID"></id>
+        <result property="productName" column="PRODUCT_NAME"/>
+        <result property="productPicture" column="PRODUCT_PICTURE"/>
+        <result property="productDescrible" column="PRODUCT_DESCRIBLE"/>
+        <result property="productContent" column="PRODUCT_CONTENT"/>
+    </resultMap>
+
+    <insert id="addProduct" parameterType="com.pojo.ProductInfo">
+        INSERT  INTO product_info
+        (PRODUCT_NAME,PRODUCT_PICTURE,PRODUCT_DESCRIBLE,PRODUCT_CONTENT)
+        VALUES
+        (#{productName},#{productPicture},#{productDescrible},#{productContent})
+    </insert>
+
+    <select id="selectOneProductByProductId" parameterType="Integer" resultMap="productResult">
+        SELECT * from product_info where PRODUCT_ID=#{ProductId}
+    </select>
+
+    <select id="selectAllProduct" resultMap="productResult">
+        select * from product_info
+        ORDER BY PRODUCT_ID ASC
+    </select>
+
+    <delete id="deleteProductByProductId" parameterType="Integer" >
+        DELETE from product_info
+        WHERE PRODUCT_ID =#{productId}
+    </delete>
+
+    <update id="updateProduct" parameterType="com.pojo.ProductInfo">
+        update product_info
+        <set>
+            <if test="productName != null and productName != ''"> PRODUCT_NAME = #{productName},</if>
+            <if test="productPicture != null and productPicture !=''"> PRODUCT_PICTURE = #{productPicture},</if>
+            <if test="productDescrible != null and productDescrible !=''"> PRODUCT_DESCRIBLE = #{productDescrible},</if>
+            <if test="productContent != null and productContent != '' "> PRODUCT_CONTENT = #{productContent},</if>
+        </set>
+        WHERE PRODUCT_ID = #{productId}
+    </update>
+    <select id="selectProductIdByTheLast" resultType="Integer">
+        select MAX(a.PRODUCT_ID) from product_info a
+    </select>
+    <select id="selectProductByProductName" resultType="Integer">
+        select count(*) from product_info where PRODUCT_NAME = #{productName}
+    </select>
+</mapper>

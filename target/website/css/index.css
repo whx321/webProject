@@ -1,0 +1,28 @@
+body{
+	background-image: url(../img/BjLogin.jpg);
+	    background-repeat: no-repeat;
+        background-size: 100%;
+   		
+}
+.box{
+	width: 500px;
+	height: 350px;
+	position: relative;
+	border-radius:10px;
+	background-color: whitesmoke;
+	margin:auto;
+	margin-top: 160px;
+	padding-left: 80px;
+	padding-right: 80px;
+	padding-top: 50px;
+	opacity: .9;
+}
+.tit{
+	position: relative;
+	font-family: "微软雅黑";
+	font-size: 30px;
+	color: #269ABC;
+	margin-left: 50px;
+	margin-bottom: 30px;
+	
+}

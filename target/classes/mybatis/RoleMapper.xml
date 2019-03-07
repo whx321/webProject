@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.RoleMapper">
+
+   <resultMap id="roleResult" type="com.pojo.RoleInfo">
+     <id property="roleId" column="ROLE_ID"></id>
+     <result property="rolename" column="ROLE_NAME"/>
+     <result property="role_description" column="ROLE_DESCRIPTION"/>
+     <collection property="permissionInfoList" ofType="com.pojo.PermissionInfo">
+           <id property="permissionId" column="PERMISSION_ID"/>
+           <result property="permissionname" column="PERMISSION_NAME"/>
+           <result property="permission_description" column="PERMISSION_DESCRIPTION"/>
+     </collection>
+   </resultMap>
+
+    <!--通过角色名查询，并获取其权限-->
+   <select id="getRoleByName" resultMap="roleResult" parameterType="string">
+       SELECT * from
+       role_info as r LEFT JOIN role_permission as rp
+       on r.ROLE_ID = rp.ROLEID
+       LEFT JOIN permission_info as p
+       on rp.PERMISSIONID = p.PERMISSION_ID
+       WHERE r.ROLE_NAME = #{rolename}
+   </select>
+
+    <!--通过角色名模糊查询，并获取其权限-->
+   <select id="getRoleFuzzy" resultMap="roleResult" parameterType="string">
+     SELECT * from
+       role_info as r LEFT JOIN role_permission as rp
+       on r.ROLE_ID = rp.ROLEID
+       LEFT JOIN permission_info as p
+       on rp.PERMISSIONID = p.PERMISSION_ID
+       WHERE r.ROLE_NAME LIKE "%"#{rolename}"%"
+   </select>
+
+    <select id="getRoleNameById" resultType="string" parameterType="Integer">
+        SELECT ROLE_NAME from role_info
+        WHERE ROLE_ID = #{roleId}
+    </select>
+
+    <!--级联删除-->
+   <delete id="deleteRole" parameterType="Integer">
+        DELETE  from role_info
+        WHERE  ROLE_ID = #{roleId}
+   </delete>
+
+   <insert id="addRole" parameterType="com.pojo.RoleInfo">
+        INSERT INTO role_info
+        (ROLE_NAME,ROLE_DESCRIPTION)
+        VALUES
+        (#{rolename},#{role_description})
+   </insert>
+
+   <update id="updateRole" parameterType="com.pojo.RoleInfo">
+       UPDATE role_info
+       <set>
+           <if test="rolename !=null and rolename != ''">ROLE_NAME = #{rolename},</if>
+           <if test="role_description !=null and role_description!=''">ROLE_DESCRIPTION = #{role_description}</if>
+       </set>
+       WHERE
+       ROLE_ID = #{roleId}
+   </update>
+
+<!--    <delete id="deleteRolePermission" parameterType="">
+
+    </delete>-->
+
+    <!--角色移除权限-->
+    <delete id="deleteRolePermission" parameterType="com.pojo.RoleInfo">
+        DELETE FROM role_permission
+        WHERE ROLEID = #{roleId}
+        AND PERMISSIONID IN
+        <foreach item="permission" collection="permissionInfoList" open="(" separator="," close=")">
+            #{permission.permissionId}
+        </foreach>
+    </delete>
+
+    <!--角色赋予权限-->
+    <insert id="addRolePermission" parameterType="com.pojo.RoleInfo">
+        INSERT INTO role_permission (ROLEID,PERMISSIONID)
+        select #{roleId} as ROLEID, PERMISSION_ID AS PERMISSIONID
+        FROM permission_info WHERE PERMISSION_ID IN
+        <foreach item="permission" collection="permissionInfoList" open="(" separator="," close=")">
+            #{permission.permissionId}
+        </foreach>
+    </insert>
+
+
+
+</mapper>
